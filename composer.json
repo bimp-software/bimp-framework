@@ -1,0 +1,21 @@
+{
+    "name": "bimp/framework",
+    "description": "The Bimp Framework",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bimp\\Framework\\": "storage/classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bimp Software SpA",
+            "email": "bimp.software@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

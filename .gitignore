@@ -1,0 +1,6 @@
+.docker/*
+/database/seeders
+/vendor
+/storage
+composer.lock
+composer.phar
