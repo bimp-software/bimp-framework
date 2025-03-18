@@ -26,10 +26,25 @@ class App {
      * @throws Exception
      */
     function init_composer() : void {
-        $file = 'vendor/autoload.php';
-        if(!is_file($file)){ die(sprintf('El archivo %s no se encuentra, es requerido para que funcione.', $file)); }
-        require_once $file;
-        return;
+        $composerAutoload = 'vendor/autoload.php';
+
+        if (!is_file($composerAutoload)) {
+            die("Error: Composer no está instalado o falta 'vendor/autoload.php'. Ejecuta 'composer install'.");
+        }
+
+        require_once $composerAutoload;
+
+        // Verificar si la clase Dotenv existe
+        if (!class_exists('Dotenv\Dotenv')) {
+            echo "⚠️  vlucas/phpdotenv no está instalado. Instalando automáticamente...\n";
+            shell_exec('composer require vlucas/phpdotenv');
+            sleep(3); // Espera un momento para que Composer termine
+            require_once $composerAutoload;
+        }
+
+        if (!class_exists('Dotenv\Dotenv')) {
+            die("Error crítico: No se pudo instalar vlucas/phpdotenv. Instálalo manualmente con 'composer require vlucas/phpdotenv'.");
+        }
     }
 
     /**
