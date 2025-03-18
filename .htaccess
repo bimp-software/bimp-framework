@@ -1,10 +1,21 @@
-<Files *.html>
-	SetOutputFilter DEFLATE
-</Files>
+# Comprimir HTML, CSS, JS y otros archivos estáticos
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
 
+<FilesMatch "^(?!index\.php$).*\.(env|json|lock|log|php|sql|bak|ini)$">
+    Require all denied
+</FilesMatch>
+
+# Redireccionamiento de URLs amigables
 <IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule  ^(.+)$ index.php?uri=$1 [QSA,L]
+    RewriteEngine On
+
+    # Evita acceso a storage/
+    RewriteRule ^storage/ - [F,L]
+
+    # Si no es un directorio o archivo real, redirige a index.php
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.+)$ index.php?uri=$1 [QSA,L]
 </IfModule>

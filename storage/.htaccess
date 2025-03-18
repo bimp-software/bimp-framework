@@ -1,0 +1,5 @@
+# Bloquear acceso a la carpeta storage/
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^.*$ - [F,L]
+</IfModule>

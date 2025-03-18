@@ -38,7 +38,7 @@ class App {
         if (!class_exists('Dotenv\Dotenv')) {
             echo "⚠️  vlucas/phpdotenv no está instalado. Instalando automáticamente...\n";
             shell_exec('composer require vlucas/phpdotenv');
-            sleep(3); // Espera un momento para que Composer termine
+            sleep(3); 
             require_once $composerAutoload;
         }
 
