@@ -1,0 +1,42 @@
+<?php
+
+use Bimp\Framework\Database\Model;
+
+/**
+ * Plantilla general de modelos
+ * @version 2.0.0
+ *
+ * Modelo de [[REPLACE]]
+ */
+class [[REPLACE]]Model extends Model {
+
+    /**
+    * Nombre de la tabla
+    */
+    protected static string $tabla_principal = '[[REPLACE]]';
+
+    // Esquema del Modelo
+    [[REPLACE_SCHEME]]
+
+    /**
+    * Constructor de la clase
+    */
+    public function __construct() {
+        parent::__construct(); // Llamar al constructor de Model
+    }
+
+    /**
+    * Método para insertar un registro en la tabla
+    *
+    * @param array $data Datos a insertar en la tabla
+    * @return mixed ID del registro insertado o false en caso de error
+    */
+    public function insertar_[[REPLACE]](array $data) {
+        try {
+            return Query::table(self::$tabla_principal)->insert($data);
+        } catch (Exception $e) {
+            error_log("Error en insertar_[[REPLACE]]: " . $e->getMessage()); // Guarda en el log de errores
+            return false; // Retorna false en caso de error
+        }
+    }
+}
