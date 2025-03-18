@@ -1,3 +1,6 @@
+# Deshabilitar listado de directorios
+Options -Indexes
+
 # Comprimir HTML, CSS, JS y otros archivos estáticos
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
@@ -6,6 +9,18 @@
 <FilesMatch "^(?!index\.php$).*\.(env|json|lock|log|php|sql|bak|ini)$">
     Require all denied
 </FilesMatch>
+
+# Solo permitir métodos seguros
+<LimitExcept GET POST OPTIONS>
+    Require all denied
+</LimitExcept>
+
+# Protección contra XSS e inyección de código
+<IfModule mod_headers.c>
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>
 
 # Redireccionamiento de URLs amigables
 <IfModule mod_rewrite.c>
@@ -18,4 +33,12 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^(.+)$ index.php?uri=$1 [QSA,L]
+</IfModule>
+
+# Bloquear hotlinking (evitar que usen tus imágenes en otros sitios)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_REFERER} !^$ 
+    RewriteCond %{HTTP_REFERER} !^https://(www\.)?tudominio\.com [NC]
+    RewriteRule \.(jpg|jpeg|png|gif|webp|svg)$ - [F]
 </IfModule>

@@ -3,3 +3,8 @@
     RewriteEngine On
     RewriteRule ^.*$ - [F,L]
 </IfModule>
+
+# Bloquear ejecución de archivos PHP en storage/
+<FilesMatch "\.php$">
+    Require all denied
+</FilesMatch>
