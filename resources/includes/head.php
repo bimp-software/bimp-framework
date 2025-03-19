@@ -16,3 +16,4 @@
 </head>
 
 <body>
+<?php $slug = isset($build->slug) ? $build->slug : 'home'; ?>

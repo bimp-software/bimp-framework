@@ -16,6 +16,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto text-lg-start text-center">
                 <li class="nav-item">
+                    <a class="nav-link <?php echo $slug === 'home' ? 'text-danger' : '';  ?>" href="home">Inicio</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Productos</a>
                 </li>
                 <li class="nav-item">
