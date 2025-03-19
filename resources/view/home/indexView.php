@@ -81,8 +81,6 @@
         </div>
     </section>
 
-
-
     <!-- Sección de Código -->
     <section class="code-section py-5 bg-dark text-white">
         <div class="container">
