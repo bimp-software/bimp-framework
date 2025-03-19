@@ -1,30 +1,8 @@
-<?php require_once INCLUDES.'inc_header.php'; ?>
+<?php require_once INCLUDES.'head.php'; ?>
 
-    <?php require_once INCLUDES.'inc_navbar.php'; ?>
+    <?php require_once COMPONENTS.'navbar.php'; ?>
 
-    <!-- Plantilla versión 1.0.5 -->
-    <main>
-        <div class="container-fluid bg-dark">
-            <div class="row">
-                <div class="col-12">
-                    <?php echo Flasher::flash(); ?>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-12 col-md-6 text-center offset-md-3 py-5 ">
-                    <a href="<?php echo get_base_url(); ?>">
-                        <img src="<?php echo get_logo(); ?>" alt="<?php echo get_sitename(); ?>" class="img-fluid" style="width: 200px;">
-                    </a>
-
-                    <h2 class="mt-5 mb-3 text-white"><span class="text-danger">Bimp</span> framework</h2>
-
-                    <!-- contenido -->
-                    <h1 class="text-white"><?php echo $d->msg; ?></h1>
-                    <p class="text-muted">Plantilla versión 1.0.0</p>
-                    <!-- ends -->
-                </div>
-            </div>
-        </div>
-    </main>
-
-<?php require_once INCLUDES.'inc_footer.php'; ?>
+    
+    <?php require_once COMPONENTS.'footer.php'; ?>
+    
+<?php require_once INCLUDES.'footer.php'; ?>

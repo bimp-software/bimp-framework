@@ -6,6 +6,7 @@ use Bimp\Framework\Console\Command\CommandRegistry;
 use Bimp\Framework\Console\Input\ConsoleInput;
 
 use Bimp\Framework\Make\MakeModel;
+use Bimp\Framework\Make\MakeController;
 
 /**
  * Clase que hace la gestion de comandos para el framework
@@ -23,6 +24,7 @@ class Kernel extends ConsoleInput{
     public function __construct(){
         $this->cmd = new CommandRegistry();
         $this->cmd->register(new MakeModel());
+        $this->cmd->register(new MakeController());
     }
 
     private function menu(){

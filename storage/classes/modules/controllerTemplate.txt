@@ -1,36 +1,13 @@
 <?php
-/**
- * Plantilla general de controladores
- * @version 1.0.0
- *
- * Controlador de [[REPLACE]]
- */
-class [[REPLACE]]Controller extends Controller implements ControllerInterface
-{
-  function __construct()
-  {
-    // Prevenir el ingreso si nos encontramos en producción y esta ruta es sólo para desarrollo o pruebas
-    // if (!is_local()) {
-    //   Redirect::to(DEFAULT_CONTROLLER);
-    // }
-    
-    // Validación de sesión de usuario, descomentar si requerida
-    // if (!Auth::validate()) {
-    //  Flasher::new('Debes iniciar sesión primero.', 'danger');
-    //  Redirect::to('login');
-    // }
 
-    // Ejecutar la funcionalidad del Controller padre
-    parent::__construct();
-  }
-  
-  function index()
-  {
-    $this->setTitle('[[REPLACE]]');
-    $this->addToData('msg', 'Bienvenido al controlador de "[[REPLACE]]", se ha creado con éxito si ves este mensaje.');
-    $this->addToData('slug','[[REPLACE]]');
-    $this->setView('index'); // por defecto es index
-    $this->render();
-  }
+use Bimp\Framework\Controller;
+use Bimp\Framework\Interface\ControllerInterface;
 
+class [[REPLACE]]Controller extends Controller implements ControllerInterface{
+
+    function index(){
+        $this->setTitle('[[REPLACE]]');
+        $this->setSlug('[[REPLACE]]');
+        $this->render();
+    }
 }
