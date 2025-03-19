@@ -81,6 +81,14 @@
         </div>
     </section>
 
+    <?php
+        use Bimp\Framework\Flasher\Alert;
+
+        Alert::info("Tu cuenta ha sido creada con exito");
+
+        echo Alert::flash();
+    ?>
+
     <!-- Sección de Código -->
     <section class="code-section py-5 bg-dark text-white">
         <div class="container">
@@ -312,6 +320,8 @@
     </div>
     </section>
 
+
+    
 <?php require_once COMPONENTS.'footer.php'; ?>
     
 <?php require_once INCLUDES.'footer.php'; ?>
