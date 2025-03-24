@@ -7,8 +7,9 @@ use Bimp\Framework\Console\Input\ConsoleInput;
 
 /**
  * Clase MakeView
- * Crea una nueva vista o agrega una vista adicional a un controlador existente.
- * Si el controlador existe, también inserta el método necesario para renderizar la vista usando $this->setView() y $this->render().
+ * Crea una nueva vista o agrega una vista a un controlador existente.
+ * También actualiza el controlador agregando una función que renderiza la vista
+ * usando $this->setView('vista') y $this->render().
  */
 class MakeView extends Command {
 
@@ -31,6 +32,7 @@ class MakeView extends Command {
 
         $this->input = new ConsoleInput();
 
+        // Verificar existencia de plantilla base
         $template = MODULES . 'viewTemplate.txt';
         if (!file_exists($template)) {
             $this->input->text("No se encontró la plantilla base en $template");
@@ -40,6 +42,7 @@ class MakeView extends Command {
         // Preguntar si se creará nueva carpeta de vista o se usará una existente
         $isNew = $this->input->confirm("¿Deseas crear una nueva carpeta de vista?");
 
+        // Nombre del controlador
         $controllerName = '';
         while (true) {
             $controllerName = $this->input->ask("Nombre del controlador (carpeta de vista): ");
@@ -77,21 +80,22 @@ class MakeView extends Command {
             }
         }
 
-        // Nombre del archivo de vista
-        $viewFileName = '';
+        // Nombre base del archivo de vista
+        $baseName = '';
         while (true) {
-            $viewFileName = $this->input->ask("Nombre del archivo de vista (sin extensión, ej: indexView): ");
-            if (empty($viewFileName)) {
+            $baseName = $this->input->ask("Nombre base de la vista (ej: home): ");
+            if (empty($baseName)) {
                 $this->input->text("El nombre no puede estar vacío.");
                 continue;
             }
 
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $viewFileName)) {
+            if (!preg_match('/^[a-zA-Z0-9_]+$/', $baseName)) {
                 $this->input->text("Solo se permiten letras, números y guiones bajos.");
                 continue;
             }
 
-            $filePath = $viewFolder . DS . $viewFileName . '.php';
+            $viewFileName = $baseName . 'View.php';
+            $filePath = $viewFolder . DS . $viewFileName;
 
             if (file_exists($filePath)) {
                 $this->input->text("Ya existe un archivo con ese nombre.");
@@ -101,9 +105,9 @@ class MakeView extends Command {
             break;
         }
 
-        // Crear archivo desde la plantilla
+        // Crear archivo de vista desde la plantilla
         $html = file_get_contents($template);
-        $html = str_replace('[[REPLACE]]', $viewFileName, $html);
+        $html = str_replace('[[REPLACE]]', $baseName, $html);
 
         if (@file_put_contents($filePath, $html) === false) {
             $this->input->text("No se pudo crear el archivo en $filePath");
@@ -112,17 +116,16 @@ class MakeView extends Command {
 
         $this->input->text("Vista creada exitosamente en: $filePath");
 
-        // Actualizar controlador si existe
+        // Agregar método al controlador si existe
         $controllerFile = CONTROLLERS . $controllerName . 'Controller.php';
-        $methodName = $viewFileName;
+        $methodName = $baseName;
 
         if (file_exists($controllerFile)) {
             $controllerCode = file_get_contents($controllerFile);
 
             if (strpos($controllerCode, "function $methodName(") === false) {
-                $methodCode = "\n    public function $methodName() {\n        \$this->setView('$controllerName/$viewFileName');\n        \$this->render();\n    }\n}";
+                $methodCode = "\n    public function $methodName() {\n        \$this->setView('$baseName');\n        \$this->render();\n    }\n}";
 
-                // Reemplazar el cierre de clase
                 $controllerCode = preg_replace('/\}\s*$/', $methodCode, $controllerCode);
 
                 if (@file_put_contents($controllerFile, $controllerCode) !== false) {

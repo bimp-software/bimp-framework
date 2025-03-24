@@ -2,7 +2,12 @@
 
     <?php require_once COMPONENTS.'navbar.php'; ?>
 
-    
+        <!-- Vista generada automáticamente -->
+        <h1>[[TITLE]]</h1>
+
+        <div class="container">
+            [[FORM]]
+        </div>
     
     <?php require_once COMPONENTS.'footer.php'; ?>
     

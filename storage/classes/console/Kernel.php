@@ -7,6 +7,8 @@ use Bimp\Framework\Console\Input\ConsoleInput;
 
 use Bimp\Framework\Make\MakeModel;
 use Bimp\Framework\Make\MakeController;
+use Bimp\Framework\Make\MakeView;
+use Bimp\Framework\Make\MakeCrud;
 
 /**
  * Clase que hace la gestion de comandos para el framework
@@ -25,6 +27,8 @@ class Kernel extends ConsoleInput{
         $this->cmd = new CommandRegistry();
         $this->cmd->register(new MakeModel());
         $this->cmd->register(new MakeController());
+        $this->cmd->register(new MakeView());
+        $this->cmd->register(new MakeCrud());
     }
 
     private function menu(){
@@ -33,7 +37,7 @@ class Kernel extends ConsoleInput{
         while (true) {
             echo "\n";
             $options = array_keys($this->cmd->all());
-            $options[] = "❌ Salir";
+            $options[] = "Salir";
     
             // Encabezado del menú
             echo "\033[36m" . str_repeat("═", 40) . "\033[0m\n";
